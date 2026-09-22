@@ -1,0 +1,49 @@
+{
+  "_comment": "Starting ~/.claude/settings.json. Every value here is deliberate. See NOTES.md in this folder for what was left out and why.",
+
+  "cleanupPeriodDays": 30,
+
+  "env": {
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUTF8": "1"
+  },
+
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f*)",
+      "PowerShell(git push --force*)",
+      "PowerShell(git push -f*)",
+      "PowerShell(git reset --hard*)",
+      "PowerShell(git clean -f*)",
+      "Read(//c/Users/<user>/AppData/Local/Google/Chrome/User Data/**)",
+      "Read(//c/Users/<user>/AppData/Local/Microsoft/Edge/User Data/**)"
+    ],
+    "defaultMode": "default"
+  },
+
+  "model": "default",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "py \"<hooks-dir>/block-known-traps.py\"" }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          { "type": "command", "command": "py \"<hooks-dir>/block-known-traps.py\"" }
+        ]
+      }
+    ]
+  },
+
+  "defaultShell": "powershell",
+  "theme": "dark"
+}
