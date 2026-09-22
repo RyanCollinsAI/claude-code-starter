@@ -1,28 +1,47 @@
 # AGENTS.md
 
-This is a working global instruction file for coding agents, with the personal parts taken out.
-Drop it at `~/.claude/AGENTS.md`, put a one-line `@AGENTS.md` in `~/.claude/CLAUDE.md`, then edit it to match you.
+A working global instruction file for coding agents, with the personal parts taken out.
+Drop it at `~/.claude/AGENTS.md` and edit it to match you. See the next section on whether you also need a `CLAUDE.md`.
 
 Every rule below earned its place by the same mistake happening twice.
 Delete anything that does not match how you work. A rule you do not believe is a rule the agent will not follow either.
 
 ## Profile
 
-Replace this section with three to six lines about you.
-The agent uses it to pick defaults, so say the things it cannot guess:
-
-- What you do, and what you are optimising for (speed, correctness, learning, cost).
-- Your tech stack and your hardware.
-- Whether you would rather spend money to save time, or the reverse.
+Replace this section with three to six lines about you. Say the things the agent cannot guess:
+what you do, what you are optimising for (speed, correctness, learning, cost), your stack and hardware,
+and whether you would rather spend money to save time or the reverse.
 
 Keep it short. This file loads on every single request, so a line here costs more than a line anywhere else.
 
 ## One instruction file, not two
 
-`AGENTS.md` is the real file. The `CLAUDE.md` beside it is a one-line `@AGENTS.md` import.
+`AGENTS.md` is the real file. Edit and cite `AGENTS.md`. Never write instructions into a `CLAUDE.md`.
 
 That way Claude Code, Codex, and other harnesses all read one file instead of three that drift apart.
-Edit and cite `AGENTS.md`. Never write instructions into a `CLAUDE.md`.
+
+Claude Code **v2.1.277** (2026-09-18) reads `AGENTS.md` natively, so on a new machine you may not need a `CLAUDE.md` at all.
+Two things to know, because the default is a fallback and not a merge:
+
+- Native reading only kicks in when there is **no** `CLAUDE.md`, `CLAUDE.local.md`, or `.claude/CLAUDE.md` at or above your working directory. One stray `CLAUDE.md` in a parent folder silently suppresses every `AGENTS.md` underneath it. Your `~/.claude/CLAUDE.md` is exempt and does not suppress anything.
+- To load **both**, put this in `~/.claude/settings.json`. It is ignored in project and local settings files, so it has to go in the user one:
+
+```json
+{
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": { "instructionFiles": "claude-md-and-agents-md" }
+    }
+  }
+}
+```
+
+Valid values are `"claude-md-or-agents-md"` (the default), `"claude-md-and-agents-md"`, `"claude-md"`, and `"managed-only"`.
+You can also set it with `/config` under **Project instructions**. Not yet supported on Bedrock, Vertex, or Foundry.
+
+The one-line `@AGENTS.md` import in `CLAUDE.md` is still the most portable option, and it is safe to keep:
+it works on older versions, it works on other harnesses, and Claude never reads the same `AGENTS.md` twice whichever value you pick.
+Keep the import if you support mixed machines. Drop the `CLAUDE.md` if everyone is on 2.1.277 or newer.
 
 ## Execution Speed / Token Conservation
 

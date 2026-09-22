@@ -34,7 +34,17 @@ Copy-Item CLAUDE.md "$HOME\.claude\CLAUDE.md"
 
 If you already have a `~/.claude/CLAUDE.md` you care about, **diff it first** instead of copying over it.
 
-`CLAUDE.md` is deliberately one line: `@AGENTS.md`. That way Claude Code, Codex, and other harnesses read the same file instead of three that drift apart.
+### Do you even need the CLAUDE.md?
+
+`CLAUDE.md` here is deliberately one line: `@AGENTS.md`. That import makes Claude Code, Codex, and other harnesses read the same file instead of three that drift apart.
+
+Claude Code **v2.1.277** (2026-09-18) reads `AGENTS.md` natively, so on a new machine you may not need the `CLAUDE.md` at all. Check with `claude --version`.
+
+The catch: native reading is a **fallback, not a merge**. It only fires when there is no `CLAUDE.md` at or above your working directory, so one stray `CLAUDE.md` in a parent folder silently suppresses every `AGENTS.md` underneath it.
+
+To load both, see the "One instruction file, not two" section of [AGENTS.md](AGENTS.md) for the exact `~/.claude/settings.json` block.
+
+Keeping the one-line import is still the most portable choice, and it is safe: it works on older versions, it works on other tools, and Claude never reads the same `AGENTS.md` twice either way.
 
 ## Then do this
 
