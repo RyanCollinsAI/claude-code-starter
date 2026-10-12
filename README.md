@@ -5,9 +5,12 @@ My global Claude Code setup, with the personal parts taken out.
 Two things live here:
 
 1. **[AGENTS.md](AGENTS.md)** - the global instruction file I actually run, scrubbed and commented. This is the part most people want.
-2. **[PLAYBOOK.md](PLAYBOOK.md)** - a long best-practices document: seventeen sections on context, prompting, planning, skills, subagents, hooks, commands, verification, autonomous loops, multi-model work, cost, legacy codebases, and anti-patterns.
+2. **[PLAYBOOK.md](PLAYBOOK.md)** - a long best-practices document: eighteen sections on context, prompting, planning, skills, subagents, hooks, commands, verification, autonomous loops, multi-model work, cost, legacy codebases, and anti-patterns, and running many sessions at once.
 
 Plus `templates/`, which has copy-pasteable settings, hooks, commands, subagents, skills, workflows, and output styles.
+
+`templates/skills/` also holds three working skills: `stow` (file what you learned in a session), `screenshot-critique` (a fresh-eyes visual check), and `write-a-skill`.
+To run many sessions at once, see [claude-orchestrate](https://github.com/RyanCollinsAI/claude-orchestrate) and section 18 of the playbook.
 
 Nothing here overwrites anything. Every step is additive.
 

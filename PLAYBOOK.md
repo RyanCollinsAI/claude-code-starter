@@ -31,6 +31,7 @@ Copy-pasteable files live in `templates/`.
 15. [The daily routine](#15-the-daily-routine)
 16. [Anti-patterns](#16-anti-patterns)
 17. [Set up a new machine](#17-set-up-a-new-machine)
+18. [Running many sessions](#18-running-many-sessions)
 
 ---
 
@@ -1102,6 +1103,52 @@ Order matters. Each step is additive and nothing here overwrites existing work.
 **8. On a client machine, add explicit boundaries.** `templates/claude-md/client.md` carries them: no send without per-message approval, no client data to third parties, a human in the loop on anything touching production, customer records, or financials, and approval that never carries forward to the next action.
 
 **9. Start a notes file on day one.** One per machine or integration surface, holding dated measured traps. Do not wait to relearn them.
+
+## 18. Running many sessions
+
+Added 2026-10. Once one session works well, the next limit is you: you become the router between five or ten sessions.
+
+**One seat talks to you.**
+Pick one session as the orchestrator.
+It reads what the others are doing, answers their small questions, and starts new sessions with the right model.
+Only it talks to you.
+The full working version is [claude-orchestrate](https://github.com/RyanCollinsAI/claude-orchestrate).
+
+**Give each session a task file, not a chat message.**
+A task file has a Goal, a Why, a Done-when, an Out-of-scope list, and a fixed report shape.
+The report shape is three lines: `Done`, `Proof`, `Next`.
+A session that has to guess what "done" means will stop early or run long.
+
+**Route by risk, not by size.**
+Each change gets a blast-radius call.
+*Contained* changes ship on their own.
+*Wide* changes (public pages, money, other people's data, one-way doors) stop and wait for a human.
+A one-way door is always wide, however small.
+
+**Proof is where the human looks.**
+A commit hash or a test count does not prove a page works.
+A screenshot of the page in the human's own browser does.
+If you could not check it there, say "not seen from the user's side".
+
+**Rules every session gets.**
+Keep them in one file the first prompt points to, so each prompt stays short.
+Mine cover: shell traps, one browser tab per session, stage only the files you touched, no sending messages or paying without an approval id, and the report shape.
+
+**Stop a session from doing the orchestrator's job.**
+A PreToolUse hook can block the orchestrator from editing code.
+It forces delegation instead of letting one context window do everything.
+
+**Dispatch by rule.**
+Write a small table: task type to model and effort.
+Sonnet for mechanical work, Opus for hard design, a cross-model reviewer for the review pass.
+The orchestrator reads the table; it does not decide each time.
+
+**Learnings go to the narrowest place that holds them.**
+A machine trap goes in a notes skill.
+A fact about one folder goes in that folder's `AGENTS.md`.
+A preference goes in memory.
+Anything that must be caught every time becomes a hook, written the turn you hear it.
+Add a rule only after the same mistake happens twice, and prune on every model release.
 
 ---
 
